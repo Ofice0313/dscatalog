@@ -25,6 +25,9 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(PageRequest pageRequest) {
         Page<Product> list = repository.findAll(pageRequest);
@@ -75,5 +78,16 @@ public class ProductService {
 
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());
+        entity.setPrice(dto.getPrice());
+        entity.setDate(dto.getDate());
+        entity.setDescription(dto.getDescription());
+        entity.setImgUrl(dto.getImgUrl());
+
+        entity.getCategories().clear();
+
+        for(CategoryDTO categoryDTO: dto.getCategories()) {
+            Category  category = categoryRepository.getReferenceById(categoryDTO.getId());
+            entity.getCategories().add(category);
+        }
     }
 }
