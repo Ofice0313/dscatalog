@@ -14,7 +14,6 @@ public class DscatalogApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Category category = new Category(1);
-		System.out.println(category.getId());
+
 	}
 }
